@@ -17,6 +17,26 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
 
   String? _result;
   bool _isLoading = false;
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_updateButtonState);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_updateButtonState);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _updateButtonState() {
+    setState(() {
+      _isButtonEnabled = _controller.text.trim().isNotEmpty;
+    });
+  }
 
   Future<void> _searchLocation(String address) async {
     setState(() {
@@ -94,9 +114,9 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _controller.text.trim().isEmpty
-                    ? null
-                    : () => _searchLocation(_controller.text),
+                onPressed: _isButtonEnabled
+                    ? () => _searchLocation(_controller.text)
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   padding: const EdgeInsets.symmetric(vertical: 14),
