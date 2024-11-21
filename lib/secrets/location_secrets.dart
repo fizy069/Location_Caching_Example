@@ -1,3 +1,3 @@
 class LocationSecrets {
-  static const MAPS_API_KEY = 'replace_with_your_api_key';
+  static const MAPS_API_KEY = 'AIzaSyD7N_JnHcIDvJC_lZuiOndrMBzHO39k-EM';
 } 
